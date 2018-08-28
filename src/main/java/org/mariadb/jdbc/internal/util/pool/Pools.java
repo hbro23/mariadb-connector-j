@@ -69,7 +69,9 @@ public class Pools {
             synchronized (poolMap) {
                 if (poolMap.containsKey(pool.getUrlParser())) {
                     poolMap.remove(pool.getUrlParser());
-                    shutdownExecutor();
+                    if (poolMap.isEmpty()) {
+                        shutdownExecutor();                       
+                    }
                 }
             }
         }
@@ -87,8 +89,6 @@ public class Pools {
                     //eat
                 }
             }
-            shutdownExecutor();
-            poolMap.clear();
         }
     }
 
